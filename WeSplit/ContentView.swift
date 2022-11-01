@@ -13,6 +13,8 @@ struct ContentView: View {
     @State private var numberOfPeople = 2
     @State private var tipPercentage = 20
     
+    @FocusState private var amountIsFocused: Bool
+    
     var totalPerPerson: Double {
         let peopleCount = Double(numberOfPeople + 2)
         let tipSelection = Double(tipPercentage)
@@ -24,6 +26,8 @@ struct ContentView: View {
         return amountPerPerson
     }
     
+    
+    
     private let persentages = [0, 5, 10, 15, 20]
     
     var body: some View {
@@ -31,9 +35,9 @@ struct ContentView: View {
             
             Form{
                 Section {
-                    TextField("Amount", value: $checkAmount, format:
-                                    .currency(code: Locale.current.currencyCode ?? "EUR"))
+                    TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "EUR"))
                         .keyboardType(.decimalPad)
+                        .focused($amountIsFocused)
                 } header: {
                     Text("your check amount")
                 }
@@ -65,7 +69,15 @@ struct ContentView: View {
                 
             }
             .navigationTitle("We Split")
+            .toolbar{
+                ToolbarItemGroup(placement: .keyboard){
+                    Button("Done"){
+                        amountIsFocused = false
+                    }
+                }
+            }
             .navigationBarTitleDisplayMode(.inline)
+            
         }
     }
 }
