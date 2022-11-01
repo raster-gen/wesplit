@@ -16,11 +16,11 @@ struct ContentView: View {
     var totalPerPerson: Double {
         let peopleCount = Double(numberOfPeople + 2)
         let tipSelection = Double(tipPercentage)
-
+        
         let tipValue = checkAmount / 100 * tipSelection
         let grandTotal = checkAmount + tipValue
         let amountPerPerson = grandTotal / peopleCount
-
+        
         return amountPerPerson
     }
     
@@ -29,48 +29,45 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             
-                Form{
-                    Section {
-                        TextField("Amount", value: $checkAmount, format:
-                            .currency(code: Locale.current.currencyCode ?? "EUR"))
-                            .keyboardType(.decimalPad)
-                    } header: {
-                        Text("your check amount")
-                    }
-                    
-                    Section {
-                        Picker("Number of people", selection: $numberOfPeople){
-                            ForEach(2 ..< 20){ numberOf in
-                                Text("\(numberOf) people")
-                            }
+            Form{
+                Section {
+                    TextField("Amount", value: $checkAmount, format:
+                                    .currency(code: Locale.current.currencyCode ?? "EUR"))
+                        .keyboardType(.decimalPad)
+                } header: {
+                    Text("your check amount")
+                }
+                
+                Section {
+                    Picker("Number of people", selection: $numberOfPeople){
+                        ForEach(2 ..< 20){ numberOf in
+                            Text("\(numberOf) people")
                         }
                     }
-                    
-                    Section {
-                        Picker("Percentage", selection: $tipPercentage){
-                            ForEach(persentages, id: \.self){ persent in
-                                Text(persent, format: .percent)
-                            }
+                }
+                
+                Section {
+                    Picker("Percentage", selection: $tipPercentage){
+                        ForEach(persentages, id: \.self){ persent in
+                            Text(persent, format: .percent)
                         }
-                        .pickerStyle(.segmented)
-                    } header: {
-                        Text("How much tip do you want to leave?")
                     }
-                    
-                    Section {
-                        Text(totalPerPerson, format: .currency(code: Locale.current.currencyCode ?? "EUR"))
-                    } header: {
-                        Text("Total per person")
-                    }
-                    
+                    .pickerStyle(.segmented)
+                } header: {
+                    Text("How much tip do you want to leave?")
+                }
+                
+                Section {
+                    Text(totalPerPerson, format: .currency(code: Locale.current.currencyCode ?? "EUR"))
+                } header: {
+                    Text("Total per person")
+                }
+                
             }
             .navigationTitle("We Split")
             .navigationBarTitleDisplayMode(.inline)
         }
-        
     }
-        
-     
 }
 
 
