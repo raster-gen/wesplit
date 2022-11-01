@@ -15,15 +15,23 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView{
-            Section{
+            
                 Form{
-                    TextField("Amount", value: $checkAmount, format:
-                        .currency(code: Locale.current.currencyCode ?? "EUR"))
-                        .keyboardType(.decimalPad)
+                    Section {
+                        TextField("Amount", value: $checkAmount, format:
+                            .currency(code: Locale.current.currencyCode ?? "EUR"))
+                            .keyboardType(.decimalPad)
+                        
+                    }
                     
-                
-                }
-                
+                    Section {
+                        Picker("Number of people", selection: $numberOfPeople){
+                            ForEach(2 ..< 20){ numberOf in
+                                Text("\(numberOf) people")
+                            }
+                        }
+                    }
+                    
             }
             .navigationTitle("We Split")
             .navigationBarTitleDisplayMode(.inline)
