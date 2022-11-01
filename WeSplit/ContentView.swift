@@ -13,7 +13,16 @@ struct ContentView: View {
     @State private var numberOfPeople = 2
     @State private var tipPercentage = 20
     
-    @State private var totalAmount = 0
+    var totalPerPerson: Double {
+        let peopleCount = Double(numberOfPeople + 2)
+        let tipSelection = Double(tipPercentage)
+
+        let tipValue = checkAmount / 100 * tipSelection
+        let grandTotal = checkAmount + tipValue
+        let amountPerPerson = grandTotal / peopleCount
+
+        return amountPerPerson
+    }
     
     private let persentages = [0, 5, 10, 15, 20]
     
@@ -49,9 +58,9 @@ struct ContentView: View {
                     }
                     
                     Section {
-                        Text("00000")
+                        Text(totalPerPerson, format: .currency(code: Locale.current.currencyCode ?? "EUR"))
                     } header: {
-                        Text("Total amount")
+                        Text("Total per person")
                     }
                     
             }
