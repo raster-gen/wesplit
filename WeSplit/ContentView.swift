@@ -13,6 +13,10 @@ struct ContentView: View {
     @State private var numberOfPeople = 2
     @State private var tipPercentage = 20
     
+    @State private var totalAmount = 0
+    
+    private let persentages = [0, 5, 10, 15, 20]
+    
     var body: some View {
         NavigationView{
             
@@ -21,7 +25,8 @@ struct ContentView: View {
                         TextField("Amount", value: $checkAmount, format:
                             .currency(code: Locale.current.currencyCode ?? "EUR"))
                             .keyboardType(.decimalPad)
-                        
+                    } header: {
+                        Text("your check amount")
                     }
                     
                     Section {
@@ -30,6 +35,23 @@ struct ContentView: View {
                                 Text("\(numberOf) people")
                             }
                         }
+                    }
+                    
+                    Section {
+                        Picker("Percentage", selection: $tipPercentage){
+                            ForEach(persentages, id: \.self){ persent in
+                                Text(persent, format: .percent)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    } header: {
+                        Text("How much tip do you want to leave?")
+                    }
+                    
+                    Section {
+                        Text("00000")
+                    } header: {
+                        Text("Total amount")
                     }
                     
             }
